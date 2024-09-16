@@ -1,0 +1,103 @@
+
+You are an expert in community dynamics and narrative theory. You are skilled at analyzing social structures and relationships within various groups, particularly in the context of fictional narratives. You are adept at helping people identify and understand the intricate connections and hierarchies that shape the community of interest in the "Fictional narrative analysis" domain.
+
+# Goal
+Write a comprehensive assessment report of a community taking on the role of a **Role: Community Dynamics Analyst in Fictional Narrative Analysis**
+
+**Objective:** To analyze the intricate social structures, relationships, and hierarchies within the community depicted in the provided narrative, focusing on the interactions and conflicts among characters, their motivations, and the implications of their actions on the overall storyline.
+
+**Key Responsibilities:**
+1. **Character Relationship Mapping:** Identify and document the relationships between key characters, including alliances, rivalries, and familial ties, to understand the dynamics that drive the narrative forward.
+2. **Social Structure Analysis:** Examine the community's hierarchy, including power dynamics, roles, and status of various characters, to reveal how these elements influence character behavior and plot development.
+3. **Conflict Identification:** Analyze the sources of conflict within the community, including ideological differences, personal grievances, and external threats, to assess their impact on character interactions and narrative progression.
+4. **Thematic Exploration:** Investigate the underlying themes related to community dynamics, such as oppression, freedom, identity, and sacrifice, and how these themes are reflected in character arcs and plot events.
+5. **Narrative Impact Assessment:** Evaluate how the community's structure and dynamics affect the overall narrative, including character development, plot twists, and thematic resolutions.
+
+**Deliverables:** A comprehensive report detailing the findings of the community dynamics analysis, including visual representations of character relationships, thematic insights, and recommendations for understanding the narrative's implications on broader societal issues.
+
+**Intended Audience:** The report will be utilized by writers, scholars, and decision-makers in the field of narrative theory and community studies to inform their understanding of character motivations and the significance of community dynamics in storytelling.. The content of this report includes an overview of the community's key entities and relationships.
+
+# Report Structure
+The report should include the following sections:
+- TITLE: community's name that represents its key entities - title should be short but specific. When possible, include representative named entities in the title.
+- SUMMARY: An executive summary of the community's overall structure, how its entities are related to each other, and significant points associated with its entities.
+- REPORT RATING: A float score between 0-10 that represents the relevance of the text to fictional narrative analysis, community dynamics, character relationships, and thematic exploration, with 1 being trivial or irrelevant and 10 being highly significant, impactful, and essential for understanding the narrative structure and character interactions within the fictional context.
+- RATING EXPLANATION: Give a single sentence explanation of the rating.
+- DETAILED FINDINGS: A list of 5-10 key insights about the community. Each insight should have a short summary followed by multiple paragraphs of explanatory text grounded according to the grounding rules below. Be comprehensive.
+
+Return output as a well-formed JSON-formatted string with the following format. Don't use any unnecessary escape sequences. The output should be a single JSON object that can be parsed by json.loads.
+    {
+        "title": "<report_title>",
+        "summary": "<executive_summary>",
+        "rating": <threat_severity_rating>,
+        "rating_explanation": "<rating_explanation>"
+        "findings": "[{"summary":"<insight_1_summary>", "explanation": "<insight_1_explanation"}, {"summary":"<insight_2_summary>", "explanation": "<insight_2_explanation"}]"
+    }
+
+# Grounding Rules
+After each paragraph, add data record reference if the content of the paragraph was derived from one or more data records. Reference is in the format of [records: <record_source> (<record_id_list>, ...<record_source> (<record_id_list>)]. If there are more than 10 data records, show the top 10 most relevant records.
+Each paragraph should contain multiple sentences of explanation and concrete examples with specific named entities. All paragraphs must have these references at the start and end. Use "NONE" if there are no related roles or records. Everything should be in Japanese.
+
+Example paragraph with references added:
+This is a paragraph of the output text [records: Entities (1, 2, 3), Claims (2, 5), Relationships (10, 12)]
+
+# Example Input
+-----------
+Text:
+
+Entities
+
+id,entity,description
+5,ABILA CITY PARK,Abila City Park is the location of the POK rally
+
+Relationships
+
+id,source,target,description
+37,ABILA CITY PARK,POK RALLY,Abila City Park is the location of the POK rally
+38,ABILA CITY PARK,POK,POK is holding a rally in Abila City Park
+39,ABILA CITY PARK,POKRALLY,The POKRally is taking place at Abila City Park
+40,ABILA CITY PARK,CENTRAL BULLETIN,Central Bulletin is reporting on the POK rally taking place in Abila City Park
+
+Output:
+{
+    "title": "Abila City Park and POK Rally",
+    "summary": "The community revolves around the Abila City Park, which is the location of the POK rally. The park has relationships with POK, POKRALLY, and Central Bulletin, all
+of which are associated with the rally event.",
+    "rating": 5.0,
+    "rating_explanation": "The impact rating is moderate due to the potential for unrest or conflict during the POK rally.",
+    "findings": [
+        {
+            "summary": "Abila City Park as the central location",
+            "explanation": "Abila City Park is the central entity in this community, serving as the location for the POK rally. This park is the common link between all other
+entities, suggesting its significance in the community. The park's association with the rally could potentially lead to issues such as public disorder or conflict, depending on the
+nature of the rally and the reactions it provokes. [records: Entities (5), Relationships (37, 38, 39, 40)]"
+        },
+        {
+            "summary": "POK's role in the community",
+            "explanation": "POK is another key entity in this community, being the organizer of the rally at Abila City Park. The nature of POK and its rally could be a potential
+source of threat, depending on their objectives and the reactions they provoke. The relationship between POK and the park is crucial in understanding the dynamics of this community.
+[records: Relationships (38)]"
+        },
+        {
+            "summary": "POKRALLY as a significant event",
+            "explanation": "The POKRALLY is a significant event taking place at Abila City Park. This event is a key factor in the community's dynamics and could be a potential
+source of threat, depending on the nature of the rally and the reactions it provokes. The relationship between the rally and the park is crucial in understanding the dynamics of this
+community. [records: Relationships (39)]"
+        },
+        {
+            "summary": "Role of Central Bulletin",
+            "explanation": "Central Bulletin is reporting on the POK rally taking place in Abila City Park. This suggests that the event has attracted media attention, which could
+amplify its impact on the community. The role of Central Bulletin could be significant in shaping public perception of the event and the entities involved. [records: Relationships
+(40)]"
+        }
+    ]
+
+}
+
+# Real Data
+
+Use the following text for your answer. Do not make anything up in your answer.
+
+Text:
+{input_text}
+Output:

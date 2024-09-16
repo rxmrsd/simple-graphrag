@@ -1,0 +1,103 @@
+
+-Goal-
+Given a text document that is potentially relevant to this activity and a list of entity types, identify all entities of those types from the text and all relationships among the identified entities.
+
+-Steps-
+1. Identify all entities. For each identified entity, extract the following information:
+- entity_name: Name of the entity, capitalized
+- entity_type: One of the following types: [tribe, person, event, giant, military organization, power, memory, battle, location, historical figure]
+- entity_description: Comprehensive description of the entity's attributes and activities
+Format each entity as ("entity"{tuple_delimiter}<entity_name>{tuple_delimiter}<entity_type>{tuple_delimiter}<entity_description>)
+
+2. From the entities identified in step 1, identify all pairs of (source_entity, target_entity) that are *clearly related* to each other.
+For each pair of related entities, extract the following information:
+- source_entity: name of the source entity, as identified in step 1
+- target_entity: name of the target entity, as identified in step 1
+- relationship_description: explanation as to why you think the source entity and the target entity are related to each other
+- relationship_strength: an integer score between 1 to 10, indicating strength of the relationship between the source entity and target entity
+Format each relationship as ("relationship"{tuple_delimiter}<source_entity>{tuple_delimiter}<target_entity>{tuple_delimiter}<relationship_description>{tuple_delimiter}<relationship_strength>)
+
+3. Return output in Japanese as a single list of all the entities and relationships identified in steps 1 and 2. Use **{record_delimiter}** as the list delimiter.
+
+4. If you have to translate into Japanese, just translate the descriptions, nothing else!
+
+5. When finished, output {completion_delimiter}.
+
+-Examples-
+######################
+
+Example 1:
+
+entity_types: [tribe, person, event, giant, military organization, power, memory, battle, location, historical figure]
+text:
+洞察力と先見性を持つ。
+
+
+年表
+
+
+古代
+紀元前970年ごろ
+「エルディア」という名の部族は、他部族へ侵略を繰り返し、捕虜にした他部族民たちを奴隷として使役していた。
+ユミルという名の奴隷の少女（すなわち「始祖ユミル」）が罪のためエルディアの部落から「追放」され、人狩りから逃げている最中にある巨大な木の中の池に落ち、巨人の起源となる（「大地の悪魔」と呼ば
+------------------------
+output:
+("entity"{tuple_delimiter}エルディア{tuple_delimiter}部族{tuple_delimiter}「エルディア」という名の部族は、他部族へ侵略を繰り返し、捕虜にした他部族民たちを奴隷として使役していた。)
+{record_delimiter}
+("entity"{tuple_delimiter}ユミル{tuple_delimiter}人物{tuple_delimiter}ユミルという名の奴隷の少女は、エルディアの部落から「追放」され、人狩りから逃げている最中にある巨大な木の中の池に落ち、巨人の起源となる。)
+{record_delimiter}
+("entity"{tuple_delimiter}巨人{tuple_delimiter}巨人{tuple_delimiter}ユミルが落ちた池から生まれた存在で、巨人の起源とされる。)
+{record_delimiter}
+("relationship"{tuple_delimiter}ユミル{tuple_delimiter}エルディア{tuple_delimiter}ユミルはエルディアの部落から追放された。{tuple_delimiter}8)
+{record_delimiter}
+("relationship"{tuple_delimiter}ユミル{tuple_delimiter}巨人{tuple_delimiter}ユミルは池に落ちたことで巨人の起源となった。{tuple_delimiter}9)
+{completion_delimiter}
+#############################
+
+
+Example 2:
+
+entity_types: [tribe, person, event, giant, military organization, power, memory, battle, location, historical figure]
+text:
+ての「壁」が崩落し、壁内にいた全ての超大型巨人が解放されたことで多数の死傷者が出る。
+アニの硬質化が強制的に解ける。
+エレンが始祖の力を使いすべてのエルディア人に｢地鳴らし｣の宣言をする。
+幾千万の超大型巨人とエレンがパラディ島からマーレへ侵攻する。
+アニ、ヒッチと接触し行動を共にする。
+ジークの「叫び」によって発生した巨人は全て掃討されるが、殆どのマ
+------------------------
+output:
+("entity"{tuple_delimiter}超大型巨人{tuple_delimiter}巨人{tuple_delimiter}壁内にいた全ての超大型巨人が解放され、多数の死傷者が出た。)
+{record_delimiter}
+("entity"{tuple_delimiter}エレン{tuple_delimiter}人{tuple_delimiter}エレンが始祖の力を使い、すべてのエルディア人に「地鳴らし」の宣言をした。)
+{record_delimiter}
+("entity"{tuple_delimiter}アニ{tuple_delimiter}人{tuple_delimiter}アニは硬質化が強制的に解け、ヒッチと接触し行動を共にした。)
+{record_delimiter}
+("entity"{tuple_delimiter}ヒッチ{tuple_delimiter}人{tuple_delimiter}ヒッチはアニと接触し、行動を共にした。)
+{record_delimiter}
+("entity"{tuple_delimiter}ジーク{tuple_delimiter}人{tuple_delimiter}ジークの「叫び」によって発生した巨人は全て掃討された。)
+{record_delimiter}
+("entity"{tuple_delimiter}パラディ島{tuple_delimiter}場所{tuple_delimiter}エレンが超大型巨人と共にマーレへ侵攻する出発点。)
+{record_delimiter}
+("entity"{tuple_delimiter}マーレ{tuple_delimiter}場所{tuple_delimiter}エレンと超大型巨人が侵攻する先。)
+{record_delimiter}
+("relationship"{tuple_delimiter}エレン{tuple_delimiter}超大型巨人{tuple_delimiter}エレンが始祖の力を使い、超大型巨人を指揮してマーレへ侵攻した。{tuple_delimiter}8)
+{record_delimiter}
+("relationship"{tuple_delimiter}アニ{tuple_delimiter}ヒッチ{tuple_delimiter}アニはヒッチと接触し、行動を共にした。{tuple_delimiter}7)
+{record_delimiter}
+("relationship"{tuple_delimiter}ジーク{tuple_delimiter}超大型巨人{tuple_delimiter}ジークの「叫び」によって発生した巨人は全て掃討された。{tuple_delimiter}9)
+{record_delimiter}
+("relationship"{tuple_delimiter}エレン{tuple_delimiter}パラディ島{tuple_delimiter}エレンが超大型巨人と共にパラディ島からマーレへ侵攻した。{tuple_delimiter}8)
+{record_delimiter}
+("relationship"{tuple_delimiter}エレン{tuple_delimiter}マーレ{tuple_delimiter}エレンが超大型巨人と共にマーレへ侵攻した。{tuple_delimiter}8)
+{completion_delimiter}
+#############################
+
+
+
+-Real Data-
+######################
+entity_types: [tribe, person, event, giant, military organization, power, memory, battle, location, historical figure]
+text: {input_text}
+######################
+output:
