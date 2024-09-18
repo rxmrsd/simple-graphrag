@@ -4,6 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["rxmrsd <morisada_keisuke@retail-ai.jp>"]
 readme = "README.md"
+packages = [{ include = "src" }]
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.13"
@@ -16,6 +17,11 @@ pandas = "^2.2.2"
 black = "^24.8.0"
 ruff = "^0.6.5"
 mypy = "^1.11.2"
+
+
+[tool.poetry.group.visualize.dependencies]
+networkx = "^3.3"
+pyvis = "^0.3.2"
 
 [build-system]
 requires = ["poetry-core"]
